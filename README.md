@@ -60,6 +60,12 @@ ptero-update-installer
 
 ---
 
+## 🖼️ Themes & Addons
+
+**Warning:** This script may **cause issues** towards themes & addons. Themes & Addons are not supported by default for Pterodactyl and may be overwritten during installation processes.
+
+---
+
 ## ⚙️ Configuration
 
 Automatic update checks run every **6 hours**.
