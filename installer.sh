@@ -67,15 +67,15 @@ read -p "Enable automatic installer updates? (y/n): " AUTO_INSTALLER_UPDATE < /d
 
 if [[ "$AUTO_INSTALLER_UPDATE" =~ ^[Yy]$ ]]; then
 
-    curl -L -o "$INSTALL_DIR/check-version" \
-    "https://raw.githubusercontent.com/itzlinaton/Pterodactyl-Updater/main/Updaters/check-version.sh"
+    curl -L -o "$INSTALL_DIR/check-installer-version" \
+    "https://raw.githubusercontent.com/itzlinaton/Pterodactyl-Updater/main/Updaters/check-installer-version.sh"
 
-    chmod +x "$INSTALL_DIR/check-version"
+    chmod +x "$INSTALL_DIR/check-installer-version"
 
-    curl -L -o "$VERSION_DIR/version.txt" \
+    curl -L -o "$VERSION_DIR/install-script-version.txt" \
     "https://raw.githubusercontent.com/itzlinaton/Pterodactyl-Updater/main/Version/install-script-version.txt"
 
-    echo "0 */6 * * * root $INSTALL_DIR/check-version >/dev/null 2>&1" > /etc/cron.d/ptero-updater-check
+    echo "0 */6 * * * root $INSTALL_DIR/check-installer-version >/dev/null 2>&1" > /etc/cron.d/ptero-updater-check
 
     echo "Automatic installer updates enabled."
 
