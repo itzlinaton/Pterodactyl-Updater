@@ -54,7 +54,7 @@ echo "Should the installer script automatically update itself?"
 echo "Update checks are executed every 6 hours!"
 echo ""
 
-read -p "Enable automatic installer updates? (y/n): " AUTO_INSTALLER_UPDATE
+read -p "Enable automatic installer updates? (y/n): " AUTO_INSTALLER_UPDATE < /dev/tty
 
 if [[ "$AUTO_INSTALLER_UPDATE" =~ ^[Yy]$ ]]; then
 
@@ -81,7 +81,7 @@ echo "Should the installer script automatically update Panel and Wings?"
 echo "Update checks are executed every 6 hours!"
 echo ""
 
-read -p "Enable automatic Panel & Wings updates? (y/n): " AUTO_PANEL_UPDATE
+read -p "Enable automatic Panel & Wings updates? (y/n): " AUTO_PANEL_UPDATE < /dev/tty
 
 if [[ "$AUTO_PANEL_UPDATE" =~ ^[Yy]$ ]]; then
 
