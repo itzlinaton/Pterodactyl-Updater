@@ -31,24 +31,35 @@ echo "#                 WINGS UPDATE                  #"
 echo "#################################################"
 echo -e "${RESET}"
 
-echo -e "${CYAN}[INFO]${RESET} Stopping Wings service..."
-systemctl stop wings
+LATEST_WINGS=$(curl -fsSL https://api.github.com/repos/pterodactyl/wings/releases/latest 2>/dev/null | grep '"tag_name"' | cut -d'"' -f4 | sed 's/v//')
+CURRENT_WINGS=$(/usr/local/bin/wings --version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
 
-echo -e "${CYAN}[INFO]${RESET} Downloading latest Wings version..."
+if [ "$CURRENT_WINGS" = "$LATEST_WINGS" ]; then
 
-curl -L -o /usr/local/bin/wings "https://github.com/pterodactyl/wings/releases/latest/download/wings_linux_$([[ "$(uname -m)" == "x86_64" ]] && echo "amd64" || echo "arm64")"
+    echo -e "${GREEN}[INFO]${RESET} Wings is already updated ($CURRENT_WINGS), skipping..."
 
-echo -e "${CYAN}[INFO]${RESET} Applying permissions..."
-chmod u+x /usr/local/bin/wings
-
-echo -e "${CYAN}[INFO]${RESET} Restarting Wings service..."
-systemctl restart wings
-
-if [ $? -eq 0 ]; then
-    echo -e "${GREEN}[SUCCESS]${RESET} Wings has been updated!"
 else
-    echo -e "${RED}[ERROR]${RESET} Wings update failed. Stopping process."
-    exit 1
+
+    echo -e "${CYAN}[INFO]${RESET} Stopping Wings service..."
+    systemctl stop wings
+
+    echo -e "${CYAN}[INFO]${RESET} Downloading latest Wings version..."
+
+    curl -L -o /usr/local/bin/wings "https://github.com/pterodactyl/wings/releases/latest/download/wings_linux_$([[ "$(uname -m)" == "x86_64" ]] && echo "amd64" || echo "arm64")"
+
+    echo -e "${CYAN}[INFO]${RESET} Applying permissions..."
+    chmod u+x /usr/local/bin/wings
+
+    echo -e "${CYAN}[INFO]${RESET} Restarting Wings service..."
+    systemctl restart wings
+
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}[SUCCESS]${RESET} Wings has been updated!"
+    else
+        echo -e "${RED}[ERROR]${RESET} Wings update failed. Stopping process."
+        exit 1
+    fi
+
 fi
 
 echo ""
@@ -63,45 +74,53 @@ echo "#                 PANEL UPDATE                  #"
 echo "#################################################"
 echo -e "${RESET}"
 
-echo -e "${CYAN}[INFO]${RESET} Entering Pterodactyl directory..."
+LATEST_PANEL=$(curl -fsSL https://api.github.com/repos/pterodactyl/panel/releases/latest 2>/dev/null | grep '"tag_name"' | cut -d'"' -f4 | sed 's/v//')
+CURRENT_PANEL=$(grep "'version'" /var/www/pterodactyl/config/app.php | grep -oE "[0-9]+\.[0-9]+\.[0-9]+" | head -1)
 
-cd /var/www/pterodactyl || exit 1
+if [ "$CURRENT_PANEL" = "$LATEST_PANEL" ]; then
 
-echo -e "${CYAN}[INFO]${RESET} Enabling maintenance mode..."
-php artisan down
+    echo -e "${GREEN}[INFO]${RESET} Panel is already updated ($CURRENT_PANEL), skipping..."
 
-echo -e "${CYAN}[INFO]${RESET} Downloading latest Panel files..."
-curl -L https://github.com/pterodactyl/panel/releases/latest/download/panel.tar.gz | tar -xzv
+else
 
-echo -e "${CYAN}[INFO]${RESET} Updating permissions..."
-chmod -R 755 storage/* bootstrap/cache
+    echo -e "${CYAN}[INFO]${RESET} Entering Pterodactyl directory..."
 
-echo -e "${CYAN}[INFO]${RESET} Installing dependencies..."
-composer install --no-dev --optimize-autoloader
+    cd /var/www/pterodactyl || exit 1
 
-echo -e "${CYAN}[INFO]${RESET} Clearing cache..."
-php artisan view:clear
-php artisan config:clear
+    echo -e "${CYAN}[INFO]${RESET} Enabling maintenance mode..."
+    php artisan down
 
-echo -e "${CYAN}[INFO]${RESET} Running database migrations..."
-php artisan migrate --seed --force
+    echo -e "${CYAN}[INFO]${RESET} Downloading latest Panel files..."
+    curl -L https://github.com/pterodactyl/panel/releases/latest/download/panel.tar.gz | tar -xzv
 
-echo -e "${CYAN}[INFO]${RESET} Fixing ownership..."
-chown -R www-data:www-data /var/www/pterodactyl/*
+    echo -e "${CYAN}[INFO]${RESET} Updating permissions..."
+    chmod -R 755 storage/* bootstrap/cache
 
-echo -e "${CYAN}[INFO]${RESET} Restarting queue..."
-php artisan queue:restart
+    echo -e "${CYAN}[INFO]${RESET} Installing dependencies..."
+    composer install --no-dev --optimize-autoloader
 
-echo -e "${CYAN}[INFO]${RESET} Disabling maintenance mode..."
-php artisan up
+    echo -e "${CYAN}[INFO]${RESET} Clearing cache..."
+    php artisan view:clear
+    php artisan config:clear
+
+    echo -e "${CYAN}[INFO]${RESET} Running database migrations..."
+    php artisan migrate --seed --force
+
+    echo -e "${CYAN}[INFO]${RESET} Fixing ownership..."
+    chown -R www-data:www-data /var/www/pterodactyl/*
+
+    echo -e "${CYAN}[INFO]${RESET} Restarting queue..."
+    php artisan queue:restart
+
+    echo -e "${CYAN}[INFO]${RESET} Disabling maintenance mode..."
+    php artisan up
+
+fi
 
 if [ $? -eq 0 ]; then
 
     # Update installed versions
     VERSION_FILE="/opt/Ptero-Updater/Version/wings-panel-version.txt"
-
-    LATEST_WINGS=$(curl -fsSL https://api.github.com/repos/pterodactyl/wings/releases/latest | grep '"tag_name"' | cut -d'"' -f4 | sed 's/v//')
-    LATEST_PANEL=$(curl -fsSL https://api.github.com/repos/pterodactyl/panel/releases/latest | grep '"tag_name"' | cut -d'"' -f4 | sed 's/v//')
 
     if [ -n "$LATEST_WINGS" ] && [ -n "$LATEST_PANEL" ]; then
         mkdir -p /opt/Ptero-Updater/Version
