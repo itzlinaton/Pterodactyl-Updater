@@ -61,6 +61,12 @@ To update **Pterodactyl-Updater** itself, run:
 ptero-update-installer
 ```
 
+To confirm the update worked, just try:
+
+```
+ptero-update --version
+```
+
 ---
 
 ## 🖼️ Themes & Addons
