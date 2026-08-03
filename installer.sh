@@ -126,11 +126,19 @@ fi
 
 echo ""
 echo -e "${GREEN}"
+
+VERSION_LINE="Version: $UPDATER_VERSION"
+INNER_WIDTH=47
+TEXT_LENGTH=${#VERSION_LINE}
+
+LEFT_PADDING=$(( (INNER_WIDTH - TEXT_LENGTH) / 2 ))
+RIGHT_PADDING=$(( INNER_WIDTH - TEXT_LENGTH - LEFT_PADDING ))
+
 echo "#################################################"
 echo "#                                               #"
 echo "#     PTERODACTYL UPDATER INSTALLED             #"
 echo "#                                               #"
-printf "#    Version: %-34s #\n" "$UPDATER_VERSION"
+printf "#%*s%s%*s#\n" "$LEFT_PADDING" "" "$VERSION_LINE" "$RIGHT_PADDING" ""
 echo "#                                               #"
 echo "#    You may now run: ptero-update              #"
 echo "#    to update the panel and wings!             #"
@@ -139,4 +147,5 @@ echo "#    To update this installer script use:       #"
 echo "#    ptero-update-installer                     #"
 echo "#                                               #"
 echo "#################################################"
+
 echo -e "${RESET}"
