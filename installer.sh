@@ -99,8 +99,19 @@ if [[ "$AUTO_PANEL_UPDATE" =~ ^[Yy]$ ]]; then
 
     chmod +x "$INSTALL_DIR/check-wings-panel-version"
 
-    curl -L -o "$VERSION_DIR/wings-panel-version.txt" \
-    "https://raw.githubusercontent.com/itzlinaton/Pterodactyl-Updater/main/Version/wings-panel-version.txt"
+    VERSION_FILE="$VERSION_DIR/wings-panel-version.txt"
+
+    if [ ! -f "$VERSION_FILE" ]; then
+
+        LATEST_WINGS=$(curl -fsSL https://api.github.com/repos/pterodactyl/wings/releases/latest | grep '"tag_name"' | cut -d'"' -f4 | sed 's/v//')
+        LATEST_PANEL=$(curl -fsSL https://api.github.com/repos/pterodactyl/panel/releases/latest | grep '"tag_name"' | cut -d'"' -f4 | sed 's/v//')
+
+        if [ -n "$LATEST_WINGS" ] && [ -n "$LATEST_PANEL" ]; then
+            echo "wings=$LATEST_WINGS" > "$VERSION_FILE"
+            echo "panel=$LATEST_PANEL" >> "$VERSION_FILE"
+        fi
+
+    fi
 
     echo "0 */6 * * * root $INSTALL_DIR/check-wings-panel-version >/dev/null 2>&1" > /etc/cron.d/ptero-wings-panel-check
 
