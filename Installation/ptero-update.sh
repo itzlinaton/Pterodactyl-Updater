@@ -32,7 +32,7 @@ echo "#################################################"
 echo -e "${RESET}"
 
 LATEST_WINGS=$(curl -fsSL https://api.github.com/repos/pterodactyl/wings/releases/latest 2>/dev/null | grep '"tag_name"' | cut -d'"' -f4 | sed 's/v//')
-CURRENT_WINGS=$(/usr/local/bin/wings --version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+CURRENT_WINGS=$(wings version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | tail -1)
 
 if [ "$CURRENT_WINGS" = "$LATEST_WINGS" ]; then
 
