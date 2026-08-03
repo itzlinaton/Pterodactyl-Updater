@@ -80,6 +80,7 @@ if [[ "$AUTO_INSTALLER_UPDATE" =~ ^[Yy]$ ]]; then
     echo "Automatic installer updates enabled."
 
 else
+    rm -f /etc/cron.d/ptero-updater-check
     echo "Automatic installer updates disabled."
 fi
 
@@ -118,6 +119,7 @@ if [[ "$AUTO_PANEL_UPDATE" =~ ^[Yy]$ ]]; then
     echo "Automatic Panel & Wings updates enabled."
 
 else
+    rm -f /etc/cron.d/ptero-wings-panel-check
     echo "Automatic Panel & Wings updates disabled."
 fi
 
