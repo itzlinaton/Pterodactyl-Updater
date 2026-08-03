@@ -20,9 +20,18 @@ fi
 mkdir -p "$VERSION_DIR"
 
 
+# Get latest updater version
+UPDATER_VERSION=$(curl -s https://raw.githubusercontent.com/itzlinaton/Pterodactyl-Updater/main/Version/install-script-version.txt)
+
+if [ -z "$UPDATER_VERSION" ]; then
+    echo -e "${RED}Failed to get updater version.${RESET}"
+    exit 1
+fi
+
+
 # Install updater
 curl -L -o "$INSTALL_DIR/ptero-update" \
-"https://raw.githubusercontent.com/itzlinaton/Pterodactyl-Updater/main/Installation/ptero-update.sh"
+"https://github.com/itzlinaton/Pterodactyl-Updater/releases/download/$UPDATER_VERSION/ptero-update.sh"
 
 if [ $? -ne 0 ]; then
     echo -e "${RED}Failed to download updater.${RESET}"
