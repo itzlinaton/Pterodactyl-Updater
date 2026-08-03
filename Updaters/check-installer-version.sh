@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION_FILE="/opt/Ptero-Updater/Version/version.txt"
+VERSION_FILE="/opt/Ptero-Updater/Version/install-script-version.txt"
 REMOTE_VERSION_URL="https://raw.githubusercontent.com/itzlinaton/Pterodactyl-Updater/main/Version/install-script-version.txt"
 
 if [ ! -f "$VERSION_FILE" ]; then
