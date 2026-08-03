@@ -22,3 +22,10 @@ to install the tool. After the installation is complete, you may then execute:
 ptero-update
 ```
 to initialize a Panel & Wings update whenever required.
+
+## Script Update Process:
+To update the script execute:
+
+```
+ptero-update-installer
+```
