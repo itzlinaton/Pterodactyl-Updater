@@ -25,9 +25,12 @@ Tired of manually downloading updates for Pterodactyl? Feel free to sit back and
 
 ## 🖥️ Supported Systems
 
+> [!NOTE]
+> This script currently only supports Ubuntu as of now. Other operating systems are not supported at this time!
+
 | System | Status |
 | --- | --- |
-| 🐧 Ubuntu | ✅ Supported |
+| 🐧 Ubuntu | 🟢 **Supported** |
 
 ---
 
@@ -62,7 +65,7 @@ ptero-update-installer
 
 ## 🖼️ Themes & Addons
 
-> [!WARNING]
+> [!CAUTION]
 > This script may **cause issues** with **themes** and **addons**. **Themes** and **addons** are not officially supported by default in Pterodactyl and may be overwritten during installation processes.
 
 ---
