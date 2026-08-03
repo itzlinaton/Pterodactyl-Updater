@@ -1,5 +1,33 @@
 #!/bin/bash
 
+#################################
+# VERSION COMMAND
+#################################
+
+if [ "$1" = "--version" ]; then
+
+    VERSION_FILE="/opt/Ptero-Updater/Version/install-script-version.txt"
+
+    if [ -f "$VERSION_FILE" ]; then
+        PTERO_UPDATER_VERSION=$(cat "$VERSION_FILE")
+    else
+        PTERO_UPDATER_VERSION="Unknown"
+    fi
+
+    VERSION_LINE="Version: $PTERO_UPDATER_VERSION"
+    PADDING=$(( (49 - ${#VERSION_LINE}) / 2 ))
+
+    echo "#################################################"
+    echo "#                                               #"
+    echo "#     PTERODACTYL PANEL UPDATER VERSION         #"
+    echo "#                                               #"
+    printf "#%*s%s%*s#\n" "$PADDING" "" "$VERSION_LINE" "$PADDING" ""
+    echo "#                                               #"
+    echo "#################################################"
+
+    exit 0
+fi
+
 # Colors
 GREEN='\033[0;32m'
 RED='\033[0;31m'
