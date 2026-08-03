@@ -14,21 +14,12 @@ if [ "$1" = "--version" ]; then
         PTERO_UPDATER_VERSION="Unknown"
     fi
 
-    VERSION_LINE="Version: $PTERO_UPDATER_VERSION"
-
-    INNER_WIDTH=47
-    TEXT_LENGTH=${#VERSION_LINE}
-
-    LEFT_PADDING=$(( (INNER_WIDTH - TEXT_LENGTH) / 2 ))
-    RIGHT_PADDING=$(( INNER_WIDTH - TEXT_LENGTH - LEFT_PADDING ))
-
     echo "#################################################"
     echo "#                                               #"
     echo "#     PTERODACTYL PANEL UPDATER VERSION         #"
     echo "#                                               #"
-    printf "#%*s%s%*s#\n" "$LEFT_PADDING" "" "$VERSION_LINE" "$RIGHT_PADDING" ""
-    echo "#                                               #"
     echo "#################################################"
+    echo "Version: $PTERO_UPDATER_VERSION"
 
     exit 0
 fi
