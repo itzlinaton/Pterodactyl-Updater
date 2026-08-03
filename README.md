@@ -6,7 +6,7 @@
 
 Tired of manually downloading updates for Pterodactyl? Feel free to sit back and allow the updater to handle it for you!
 
-[![Downloads](https://img.shields.io/github/downloads/itzlinaton/Pterodactyl-Updater/latest/total?style=for-the-badge&logo=github&logoColor=white&label=Downloads&color=007ec6)](https://github.com/itzlinaton/Pterodactyl-Updater/releases)
+[![Downloads Latest](https://img.shields.io/github/downloads/itzlinaton/Pterodactyl-Updater/latest/total?style=for-the-badge&logo=github&logoColor=white&label=Downloads%20Latest&color=007ec6)](https://github.com/itzlinaton/Pterodactyl-Updater/releases)
 ![License](https://img.shields.io/github/license/itzlinaton/Pterodactyl-Updater?style=for-the-badge)
 ![Last Commit](https://img.shields.io/github/last-commit/itzlinaton/Pterodactyl-Updater?style=for-the-badge&logo=git)
 
