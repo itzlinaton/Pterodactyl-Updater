@@ -48,13 +48,16 @@ chmod +x "$INSTALL_DIR/ptero-update-installer"
 ln -sf "$INSTALL_DIR/ptero-update-installer" /usr/local/bin/ptero-update-installer
 
 
+exec < /dev/tty
+
+
 # Install version checker
 echo ""
 echo "Should the installer script automatically update itself?"
 echo "Update checks are executed every 6 hours!"
 echo ""
 
-read -p "Enable automatic installer updates? (y/n): " AUTO_INSTALLER_UPDATE < /dev/tty
+read -p "Enable automatic installer updates? (y/n): " AUTO_INSTALLER_UPDATE
 
 if [[ "$AUTO_INSTALLER_UPDATE" =~ ^[Yy]$ ]]; then
 
@@ -81,7 +84,7 @@ echo "Should the installer script automatically update Panel and Wings?"
 echo "Update checks are executed every 6 hours!"
 echo ""
 
-read -p "Enable automatic Panel & Wings updates? (y/n): " AUTO_PANEL_UPDATE < /dev/tty
+read -p "Enable automatic Panel & Wings updates? (y/n): " AUTO_PANEL_UPDATE
 
 if [[ "$AUTO_PANEL_UPDATE" =~ ^[Yy]$ ]]; then
 
