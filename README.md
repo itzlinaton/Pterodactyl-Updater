@@ -62,7 +62,8 @@ ptero-update-installer
 
 ## 🖼️ Themes & Addons
 
-**Warning:** This script may **cause issues** towards themes & addons. Themes & Addons are not supported by default for Pterodactyl and may be overwritten during installation processes.
+> [!WARNING]
+> This script may **cause issues** with **themes** and **addons**. **Themes** and **addons** are not officially supported by default in Pterodactyl and may be overwritten during installation processes.
 
 ---
 
